@@ -1,0 +1,21 @@
+Metrics/LineLength:
+  Max: 120
+
+Style/Documentation:
+  Enabled: false
+
+Style/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    '%r': '{}'
+    '%i': '[]'
+    '%w': '[]'
+    '%W': '[]'
+
+Style/RegexpLiteral:
+  EnforcedStyle: mixed
+
+Style/AndOr:
+  EnforcedStyle: conditionals
