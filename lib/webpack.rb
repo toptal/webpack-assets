@@ -34,5 +34,18 @@ module Webpack
       fail "#{name}.#{ext} does not exist" unless entry
       entry
     end
+
+    # @param static_files [Hash]
+    def load_static_files(static_files)
+      @static_files = static_files
+    end
+
+    # @param path [String]
+    # @return [String]
+    def fetch_static_file(path)
+      static_file = @static_files[path]
+      fail "#{path} does not exist" unless static_file
+      static_file
+    end
   end
 end

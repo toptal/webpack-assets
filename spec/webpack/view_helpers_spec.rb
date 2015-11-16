@@ -5,6 +5,7 @@ RSpec.describe Webpack::ViewHelpers, type: :helper do
     Webpack.configure do |config|
       config.port = 4242
       config.public_path = '/foobar'
+      config.static_path = 'foo/bar'
       config.extract_css = true
     end
 
@@ -13,6 +14,10 @@ RSpec.describe Webpack::ViewHelpers, type: :helper do
         'js'  => '/foobar/baz.42.js',
         'css' => '/foobar/baz.12.css'
       }
+    )
+
+    Webpack.load_static_files(
+      'foo/bar/logo.png' => '/foobar/42.png'
     )
   end
 
@@ -46,6 +51,20 @@ RSpec.describe Webpack::ViewHelpers, type: :helper do
     it 'does not render css tag when extract_css is false' do
       Webpack.config.extract_css = false
       is_expected.to be_nil
+    end
+  end
+
+  describe '#webpack_static_file_url' do
+    subject { helper.webpack_static_file_url('logo.png') }
+
+    it 'uses assets server url in development' do
+      Webpack.config.use_server = true
+      is_expected.to eq('//test.host:4242/foobar/logo.png')
+    end
+
+    it 'uses precompiled path' do
+      Webpack.config.use_server = false
+      is_expected.to eq('/foobar/42.png')
     end
   end
 end
