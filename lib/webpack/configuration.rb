@@ -6,6 +6,9 @@ module Webpack
     # @attribute public_path [String]
     attr_accessor :public_path
 
+    # @attribute static_path [String]
+    attr_accessor :static_path
+
     # @attribute use_server [Boolean]
     attr_accessor :use_server
 

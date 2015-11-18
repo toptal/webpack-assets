@@ -21,6 +21,12 @@ module Webpack
       webpack_context.entry_url(name, ext)
     end
 
+    # @param path [String]
+    # @return [String]
+    def webpack_static_file_url(path)
+      webpack_context.static_file_url(path)
+    end
+
     class Context
       attr_reader :view_context
 
@@ -33,6 +39,14 @@ module Webpack
           server_url("#{name}.#{ext}")
         else
           Webpack.fetch_entry(name.to_s, ext.to_s)
+        end
+      end
+
+      def static_file_url(path)
+        if Webpack.config.use_server
+          server_url(path)
+        else
+          Webpack.fetch_static_file("#{Webpack.config.static_path}/#{path}")
         end
       end
 

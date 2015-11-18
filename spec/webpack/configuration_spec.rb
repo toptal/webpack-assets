@@ -6,6 +6,7 @@ RSpec.describe Webpack::Configuration do
   before do
     config.port = 4242
     config.public_path = '/foobar'
+    config.static_path = 'foo/bar'
     config.use_server = true
     config.extract_css = false
   end
@@ -16,6 +17,10 @@ RSpec.describe Webpack::Configuration do
 
   it 'has public_path option' do
     expect(config.public_path).to eq('/foobar')
+  end
+
+  it 'has static_path option' do
+    expect(config.static_path).to eq('foo/bar')
   end
 
   it 'has use_server option' do
