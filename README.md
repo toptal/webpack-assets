@@ -1,4 +1,6 @@
-# Webpack::Assets
+# Webpack Assets
+
+Webpack-Rails integration.
 
 ## Installation
 
@@ -17,6 +19,39 @@ Or install it yourself as:
     $ gem install webpack-assets
 
 ## Usage
+
+Minimal configuration (`config/initializers/webpack.rb`):
+
+```ruby
+Webpack.configure do |config|
+  config.port = 4000
+  config.public_path = '/assets'
+  config.static_path = 'front/static'
+end
+```
+
+Required settings:
+
+- `port` - the port webpack dev server is running on.
+- `public_path` - the base path for assets.
+- `static_path` - the root path for static files.
+
+Optional settings:
+
+- `use_server` - whether webpack dev server is being used (`Rails.env.development?` by default).
+- `extract_css` - whether css is extracted to a separate file (`!Rails.env.development?` by default).
+
+View helpers:
+
+- `webpack_js_tag` is a replacement for `javascript_include_tag`.
+
+- `webpack_css_tag` is a replacement for `stylesheet_link_tag`.
+
+- `webpack_static_file_url` resolves paths to static files (assets used directly from HTML), e.g.:
+
+  ```erb
+  <%= image_tag webpack_static_file_url('img/logo.png') %>
+  ```
 
 ## Development
 
