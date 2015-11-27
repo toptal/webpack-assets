@@ -53,7 +53,11 @@ module Webpack
       private
 
       def server_url(path)
-        "//#{view_context.request.host}:#{Webpack.config.port}#{Webpack.config.public_path}/#{path}"
+        "//#{server_host}#{Webpack.config.public_path}/#{path}"
+      end
+
+      def server_host
+        Webpack.config.host || "#{view_context.request.host}:#{Webpack.config.port}"
       end
     end
   end

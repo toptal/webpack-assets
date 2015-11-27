@@ -39,7 +39,22 @@ Required settings:
 Optional settings:
 
 - `use_server` - whether webpack dev server is being used (`Rails.env.development?` by default).
+
 - `extract_css` - whether css is extracted to a separate file (`!Rails.env.development?` by default).
+
+- `host` - the host with the port webpack dev server is running on (can be used instead of `port` option).
+
+  Example usage:
+
+  ```ruby
+  Webpack.configure do |config|
+    if ENV['WEBPACK_HOST']
+      config.host = ENV['WEBPACK_HOST']
+    else
+      config.port = 4000
+    end
+  end
+  ```
 
 View helpers:
 
