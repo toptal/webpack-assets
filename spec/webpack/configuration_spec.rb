@@ -5,6 +5,7 @@ RSpec.describe Webpack::Configuration do
 
   before do
     config.port = 4242
+    config.host = 'example.com:4040'
     config.public_path = '/foobar'
     config.static_path = 'foo/bar'
     config.use_server = true
@@ -13,6 +14,10 @@ RSpec.describe Webpack::Configuration do
 
   it 'has port option' do
     expect(config.port).to eq(4242)
+  end
+
+  it 'has host options' do
+    expect(config.host).to eq('example.com:4040')
   end
 
   it 'has public_path option' do
@@ -32,10 +37,21 @@ RSpec.describe Webpack::Configuration do
   end
 
   describe '#validate!' do
-    it 'fails when port is nil' do
+    it 'fails when port and host are nil' do
       config.port = nil
+      config.host = nil
       expect { config.validate! }
         .to raise_error(RuntimeError, 'Webpack port is not configured')
+    end
+
+    it "doesn't fail when only port is nil" do
+      config.port = nil
+      expect { config.validate! }.not_to raise_error
+    end
+
+    it "doesn't fail when only host is nil" do
+      config.port = nil
+      expect { config.validate! }.not_to raise_error
     end
 
     it 'fails when public_path is nil' do

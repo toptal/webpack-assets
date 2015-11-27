@@ -3,6 +3,9 @@ module Webpack
     # @attribute port [Integer]
     attr_accessor :port
 
+    # @attribute host [String]
+    attr_accessor :host
+
     # @attribute public_path [String]
     attr_accessor :public_path
 
@@ -16,9 +19,8 @@ module Webpack
     attr_accessor :extract_css
 
     def validate!
-      %w[port public_path].each do |attr|
-        fail "Webpack #{attr} is not configured" unless public_send(attr)
-      end
+      fail 'Webpack public_path is not configured' unless public_path
+      fail 'Webpack port is not configured' unless port || host
     end
   end
 end

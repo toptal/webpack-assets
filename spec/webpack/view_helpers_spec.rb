@@ -4,6 +4,7 @@ RSpec.describe Webpack::ViewHelpers, type: :helper do
   before do
     Webpack.configure do |config|
       config.port = 4242
+      config.host = nil
       config.public_path = '/foobar'
       config.static_path = 'foo/bar'
       config.extract_css = true
@@ -29,6 +30,12 @@ RSpec.describe Webpack::ViewHelpers, type: :helper do
       is_expected.to include('"//test.host:4242/foobar/app.js"')
     end
 
+    it 'uses config.host' do
+      Webpack.config.use_server = true
+      Webpack.config.host = 'example.com:4040'
+      is_expected.to include('//example.com:4040/foobar/app.js')
+    end
+
     it 'uses precompiled path' do
       Webpack.config.use_server = false
       is_expected.to include('"/foobar/baz.42.js"')
@@ -41,6 +48,12 @@ RSpec.describe Webpack::ViewHelpers, type: :helper do
     it 'uses assets server url in development' do
       Webpack.config.use_server = true
       is_expected.to include('//test.host:4242/foobar/app.css')
+    end
+
+    it 'uses config.host' do
+      Webpack.config.use_server = true
+      Webpack.config.host = 'example.com:4040'
+      is_expected.to include('//example.com:4040/foobar/app.css')
     end
 
     it 'uses precompiled path' do
@@ -60,6 +73,12 @@ RSpec.describe Webpack::ViewHelpers, type: :helper do
     it 'uses assets server url in development' do
       Webpack.config.use_server = true
       is_expected.to eq('//test.host:4242/foobar/logo.png')
+    end
+
+    it 'uses config.host' do
+      Webpack.config.use_server = true
+      Webpack.config.host = 'example.com:4040'
+      is_expected.to include('//example.com:4040/foobar/logo.png')
     end
 
     it 'uses precompiled path' do
