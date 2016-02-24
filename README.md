@@ -1,6 +1,11 @@
 # Webpack Assets
 
-Webpack-Rails integration.
+`webpack-assets` gem is a lightweight
+[webpack](https://github.com/webpack/webpack)-[Rails](https://github.com/rails/rails)
+integration. It provides the necessary view helpers to completely replace Rails
+Asset Pipeline with webpack. Any custom webpack configuration should be
+supported if it satisfies the assumptions described in
+[the corresponding section](#webpack-configuration).
 
 ## Installation
 
@@ -67,6 +72,14 @@ View helpers:
   ```erb
   <%= image_tag webpack_static_file_url('img/logo.png') %>
   ```
+
+## Webpack configuration
+
+`webpack-assets` makes several assumptions:
+
+- [`assets-webpack-plugin`](https://github.com/sporto/assets-webpack-plugin) is used to prepare `webpack-assets.json` assets manifest.
+
+- [`static-files-webpack-plugin`](https://github.com/kossnocorp/static-files-webpack-plugin) is used to prepare `static.json` assets manifest.
 
 ## Development
 
