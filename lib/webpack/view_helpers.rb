@@ -46,7 +46,12 @@ module Webpack
         if Webpack.config.use_server
           server_url(path)
         else
-          Webpack.fetch_static_file("#{Webpack.config.static_path}/#{path}")
+          static_file = Webpack.fetch_static_file("#{Webpack.config.static_path}/#{path}")
+          if Webpack.config.cdn_url.present?
+            "//#{Webpack.config.cdn_url}#{static_file}"
+          else
+            static_file
+          end
         end
       end
 

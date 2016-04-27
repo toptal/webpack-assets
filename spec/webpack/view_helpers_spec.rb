@@ -85,5 +85,10 @@ RSpec.describe Webpack::ViewHelpers, type: :helper do
       Webpack.config.use_server = false
       is_expected.to eq('/foobar/42.png')
     end
+
+    it 'uses CDN url' do
+      Webpack.config.cdn_url = 'test.io'
+      is_expected.to eq('//test.io/foobar/42.png')
+    end
   end
 end
