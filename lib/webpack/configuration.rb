@@ -12,6 +12,9 @@ module Webpack
     # @attribute static_path [String]
     attr_accessor :static_path
 
+    # @attribute cdn_url [String]
+    attr_accessor :cdn_url
+
     # @attribute use_server [Boolean]
     attr_accessor :use_server
 
