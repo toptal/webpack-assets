@@ -61,7 +61,7 @@ Optional settings:
   end
   ```
 
-- `cdn_url` - the base CDN URL (used only in `webpack_static_file_url` for now).
+- `cdn_host` - the CDN host (used only in `webpack_static_file_url` for now).
 
 View helpers:
 
