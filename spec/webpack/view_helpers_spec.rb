@@ -27,7 +27,7 @@ RSpec.describe Webpack::ViewHelpers, type: :helper do
 
     it 'uses assets server url in development' do
       Webpack.config.use_server = true
-      is_expected.to include('"//test.host:4242/foobar/app.js"')
+      is_expected.to include('src="http://test.host:4242/foobar/app.js"')
     end
 
     it 'uses config.host' do
@@ -38,7 +38,7 @@ RSpec.describe Webpack::ViewHelpers, type: :helper do
 
     it 'uses precompiled path' do
       Webpack.config.use_server = false
-      is_expected.to include('"/foobar/baz.42.js"')
+      is_expected.to include('src="/foobar/baz.42.js"')
     end
   end
 
@@ -58,7 +58,7 @@ RSpec.describe Webpack::ViewHelpers, type: :helper do
 
     it 'uses precompiled path' do
       Webpack.config.use_server = false
-      is_expected.to include('"/foobar/baz.12.css"')
+      is_expected.to include('href="/foobar/baz.12.css"')
     end
 
     it 'does not render css tag when extract_css is false' do
@@ -72,7 +72,7 @@ RSpec.describe Webpack::ViewHelpers, type: :helper do
 
     it 'uses assets server url in development' do
       Webpack.config.use_server = true
-      is_expected.to eq('//test.host:4242/foobar/logo.png')
+      is_expected.to eq('http://test.host:4242/foobar/logo.png')
     end
 
     it 'uses config.host' do
@@ -86,9 +86,16 @@ RSpec.describe Webpack::ViewHelpers, type: :helper do
       is_expected.to eq('/foobar/42.png')
     end
 
+    it 'uses the request protocol' do
+      allow(helper.request).to receive(:protocol).and_return('https://')
+      Webpack.config.use_server = true
+      is_expected.to eq('https://test.host:4242/foobar/logo.png')
+    end
+
     it 'uses CDN host' do
+      Webpack.config.use_server = false
       Webpack.config.cdn_host = 'test.io'
-      is_expected.to eq('//test.io/foobar/42.png')
+      is_expected.to eq('http://test.io/foobar/42.png')
     end
   end
 end

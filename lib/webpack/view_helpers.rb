@@ -48,7 +48,7 @@ module Webpack
         else
           static_file = Webpack.fetch_static_file("#{Webpack.config.static_path}/#{path}")
           if Webpack.config.cdn_host.present?
-            "//#{Webpack.config.cdn_host}#{static_file}"
+            "#{protocol}#{Webpack.config.cdn_host}#{static_file}"
           else
             static_file
           end
@@ -57,8 +57,12 @@ module Webpack
 
       private
 
+      def protocol
+        @view_context.request.protocol.presence || '//'
+      end
+
       def server_url(path)
-        "//#{server_host}#{Webpack.config.public_path}/#{path}"
+        "#{protocol}#{server_host}#{Webpack.config.public_path}/#{path}"
       end
 
       def server_host
