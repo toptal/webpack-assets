@@ -6,6 +6,9 @@ module Webpack
     # @attribute host [String]
     attr_accessor :host
 
+    # @attribute protocol [String]
+    attr_accessor :protocol
+
     # @attribute public_path [String]
     attr_accessor :public_path
 
