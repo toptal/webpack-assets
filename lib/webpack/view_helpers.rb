@@ -57,16 +57,21 @@ module Webpack
 
       private
 
-      def protocol
-        @view_context.request.protocol.presence || '//'
-      end
-
       def server_url(path)
         "#{protocol}#{server_host}#{Webpack.config.public_path}/#{path}"
       end
 
+      def protocol
+        return "#{Webpack.config.protocol}://" if Webpack.config.protocol
+        view_context.try(:request).try(:protocol) || '//'
+      end
+
       def server_host
-        Webpack.config.host || "#{view_context.request.host}:#{Webpack.config.port}"
+        return Webpack.config.host if Webpack.config.host
+
+        host = view_context.try(:request).try(:host) || 'localhost'
+
+        "#{host}:#{Webpack.config.port}"
       end
     end
   end

@@ -6,6 +6,7 @@ RSpec.describe Webpack::Configuration do
   before do
     config.port = 4242
     config.host = 'example.com:4040'
+    config.protocol = 'https'
     config.public_path = '/foobar'
     config.static_path = 'foo/bar'
     config.cdn_host = 'test.io'
@@ -19,6 +20,10 @@ RSpec.describe Webpack::Configuration do
 
   it 'has host options' do
     expect(config.host).to eq('example.com:4040')
+  end
+
+  it 'has protocol option' do
+    expect(config.protocol).to eq('https')
   end
 
   it 'has public_path option' do

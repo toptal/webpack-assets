@@ -86,6 +86,13 @@ RSpec.describe Webpack::ViewHelpers, type: :helper do
       is_expected.to eq('/foobar/42.png')
     end
 
+    it 'uses config.protocol' do
+      Webpack.config.protocol = 'https'
+      Webpack.config.use_server = true
+      Webpack.config.host = 'example.com:4040'
+      is_expected.to include('https://example.com:4040/foobar/logo.png')
+    end
+
     it 'uses the request protocol' do
       allow(helper.request).to receive(:protocol).and_return('https://')
       Webpack.config.use_server = true
@@ -93,6 +100,7 @@ RSpec.describe Webpack::ViewHelpers, type: :helper do
     end
 
     it 'uses CDN host' do
+      Webpack.config.protocol = 'http'
       Webpack.config.use_server = false
       Webpack.config.cdn_host = 'test.io'
       is_expected.to eq('http://test.io/foobar/42.png')
