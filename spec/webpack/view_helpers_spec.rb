@@ -106,6 +106,22 @@ RSpec.describe Webpack::ViewHelpers, type: :helper do
       Webpack.config.cdn_host = 'test.io'
       is_expected.to include('http://test.io/foobar/baz.12.css')
     end
+
+    context 'with "screen" media' do
+      subject {  helper.webpack_css_tag(:app, media: 'screen') }
+
+      it 'renders the correct media tag' do
+        is_expected.to include('screen')
+      end
+    end
+
+    context 'with "all" media' do
+      subject {  helper.webpack_css_tag(:app, media: 'all') }
+
+      it 'renders the correct media tag' do
+        is_expected.to include('all')
+      end
+    end
   end
 
   describe '#webpack_static_file_url' do
