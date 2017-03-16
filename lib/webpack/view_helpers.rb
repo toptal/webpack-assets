@@ -10,8 +10,9 @@ module Webpack
     end
 
     # @param name [String]
-    def webpack_css_tag(name)
-      stylesheet_link_tag(webpack_entry_url(name, :css)) if Webpack.config.extract_css
+    # @param media [String]
+    def webpack_css_tag(name, media: "screen")
+      stylesheet_link_tag(webpack_entry_url(name, :css), media: media) if Webpack.config.extract_css
     end
 
     # @param name [String]
@@ -38,7 +39,12 @@ module Webpack
         if Webpack.config.use_server
           server_url("#{name}.#{ext}")
         else
-          Webpack.fetch_entry(name.to_s, ext.to_s)
+          entry = Webpack.fetch_entry(name.to_s, ext.to_s)
+          if Webpack.config.cdn_host.present?
+            "#{protocol}#{Webpack.config.cdn_host}#{entry}"
+          else
+            entry
+          end
         end
       end
 
