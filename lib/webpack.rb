@@ -20,6 +20,10 @@ module Webpack
       config.validate!
     end
 
+    def reset
+      @config = nil
+    end
+
     # @param entries [Hash]
     def load_entries(entries)
       @entries = entries
