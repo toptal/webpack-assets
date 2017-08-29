@@ -49,6 +49,8 @@ Optional settings:
 
 - `host` - the host with the port webpack dev server is running on (can be used instead of `port` option).
 
+- `cdn_host` - the CDN host (will be prepended to URLs for all files).
+
   Example usage:
 
   ```ruby
@@ -60,8 +62,6 @@ Optional settings:
     end
   end
   ```
-
-- `cdn_host` - the CDN host (used only in `webpack_static_file_url` for now).
 
 View helpers:
 

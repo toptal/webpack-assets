@@ -22,6 +22,10 @@ RSpec.describe Webpack::ViewHelpers, type: :helper do
     )
   end
 
+  after do
+    Webpack.reset
+  end
+
   describe '#webpack_js_tag' do
     subject { helper.webpack_js_tag(:app) }
 
@@ -39,6 +43,13 @@ RSpec.describe Webpack::ViewHelpers, type: :helper do
     it 'uses precompiled path' do
       Webpack.config.use_server = false
       is_expected.to include('src="/foobar/baz.42.js"')
+    end
+
+    it 'uses CDN host' do
+      Webpack.config.protocol = 'http'
+      Webpack.config.use_server = false
+      Webpack.config.cdn_host = 'test.io'
+      is_expected.to include('src="http://test.io/foobar/baz.42.js"')
     end
   end
 
@@ -64,6 +75,13 @@ RSpec.describe Webpack::ViewHelpers, type: :helper do
     it 'does not render css tag when extract_css is false' do
       Webpack.config.extract_css = false
       is_expected.to be_nil
+    end
+
+    it 'uses CDN host' do
+      Webpack.config.protocol = 'http'
+      Webpack.config.use_server = false
+      Webpack.config.cdn_host = 'test.io'
+      is_expected.to include('href="http://test.io/foobar/baz.12.css"')
     end
   end
 

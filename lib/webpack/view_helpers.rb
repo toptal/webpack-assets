@@ -38,7 +38,8 @@ module Webpack
         if Webpack.config.use_server
           server_url("#{name}.#{ext}")
         else
-          Webpack.fetch_entry(name.to_s, ext.to_s)
+          entry = Webpack.fetch_entry(name.to_s, ext.to_s)
+          full_url(entry)
         end
       end
 
@@ -47,15 +48,19 @@ module Webpack
           server_url(path)
         else
           static_file = Webpack.fetch_static_file("#{Webpack.config.static_path}/#{path}")
-          if Webpack.config.cdn_host.present?
-            "#{protocol}#{Webpack.config.cdn_host}#{static_file}"
-          else
-            static_file
-          end
+          full_url(static_file)
         end
       end
 
       private
+
+      def full_url(path)
+        if Webpack.config.cdn_host.present?
+          [protocol, Webpack.config.cdn_host, path].join
+        else
+          path
+        end
+      end
 
       def server_url(path)
         "#{protocol}#{server_host}#{Webpack.config.public_path}/#{path}"
