@@ -51,6 +51,14 @@ RSpec.describe Webpack::ViewHelpers, type: :helper do
       Webpack.config.cdn_host = 'test.io'
       is_expected.to include('src="http://test.io/foobar/baz.42.js"')
     end
+
+    context 'when options are passed' do
+      subject { helper.webpack_js_tag(:app, defer: true) }
+
+      it 'uses options' do
+        is_expected.to include('defer="defer"')
+      end
+    end
   end
 
   describe '#webpack_css_tag' do

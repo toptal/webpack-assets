@@ -5,8 +5,8 @@ module Webpack
     end
 
     # @param name [String]
-    def webpack_js_tag(name)
-      javascript_include_tag(webpack_entry_url(name, :js))
+    def webpack_js_tag(name, **options)
+      javascript_include_tag(webpack_entry_url(name, :js), options)
     end
 
     # @param name [String]
