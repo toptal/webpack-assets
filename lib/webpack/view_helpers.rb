@@ -10,8 +10,8 @@ module Webpack
     end
 
     # @param name [String]
-    def webpack_css_tag(name)
-      stylesheet_link_tag(webpack_entry_url(name, :css)) if Webpack.config.extract_css
+    def webpack_css_tag(name, **options)
+      stylesheet_link_tag(webpack_entry_url(name, :css), options) if Webpack.config.extract_css
     end
 
     # @param name [String]

@@ -91,6 +91,14 @@ RSpec.describe Webpack::ViewHelpers, type: :helper do
       Webpack.config.cdn_host = 'test.io'
       is_expected.to include('href="http://test.io/foobar/baz.12.css"')
     end
+
+    context 'when options are passed' do
+      subject { helper.webpack_css_tag(:app, media: 'nope!') }
+
+      it 'uses options' do
+        is_expected.to include('media="nope!"')
+      end
+    end
   end
 
   describe '#webpack_static_file_url' do
